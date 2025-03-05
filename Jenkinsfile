@@ -4,7 +4,7 @@ pipeline {
             // Define Docker Hub credentials ID
             DOCKERHUB_CREDENTIALS_ID = '338f98cb-c0d0-4baa-ae27-7ab4389daed3'
             // Define Docker Hub repository name
-            DOCKERHUB_REPO = 'goliathuzzzz/test_repo'
+            DOCKERHUB_REPO = 'mikaklaa/test_repo'
             // Define Docker image tag
             DOCKER_IMAGE_TAG = 'latest_v1'
         }
