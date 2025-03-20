@@ -1,12 +1,16 @@
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 public class TripCostCalculator {
     private double distance;
     private double fuelPrice;
+    private final ResourceBundle resourceBundle;
 
-    public TripCostCalculator(double distance, double fuelPrice) {
+    public TripCostCalculator(double distance, double fuelPrice, ResourceBundle resourceBundle) {
         this.distance = distance;
         this.fuelPrice = fuelPrice;
+        this.resourceBundle = resourceBundle;
     }
 
     public double calculateTotalFuel() {
@@ -20,8 +24,8 @@ public class TripCostCalculator {
     }
 
     public void gatherTripInfo() {
-        System.out.println("Total fuel needed: " + calculateTotalFuel());
-        System.out.println("Total cost of trip: " + calculateTotalCost());
+        System.out.println(resourceBundle.getString("fuel") + ": " + calculateTotalFuel());
+        System.out.println(resourceBundle.getString("trip") + ": " + calculateTotalCost());
     }
 
     public double getDistance() {

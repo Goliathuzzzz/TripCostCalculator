@@ -5,6 +5,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,7 +19,8 @@ class TripCostCalculatorTest {
 
     @BeforeAll
     static void init() {
-        tripCostCalculator = new TripCostCalculator(100, 1.8);
+        Locale locale = new Locale("en", "US");
+        tripCostCalculator = new TripCostCalculator(100, 1.8, ResourceBundle.getBundle("messages", locale));
     }
 
     @BeforeEach
