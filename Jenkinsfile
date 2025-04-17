@@ -29,11 +29,22 @@ pipeline {
         }
         stage('SonarQube Analysis') {
              steps {
-                script {
-                     def scannerHome = tool 'SonarQube Scanner'
-                     withSonarQubeEnv(SONARQUBE_SERVER) {
-                         bat "${scannerHome}\\bin\\sonar-scanner -Dsonar.projectKey=devops-demo -Dsonar.sources=src -Dsonar.projectName=TripCostCalculator -Dsonar.host.url=http://localhost:9000 -Dsonar.token=${SONAR_TOKEN} -Dsonar.java.binaries=target/classes"
-                     }
+//                 script {
+//                      def scannerHome = tool 'SonarQube Scanner'
+//                      withSonarQubeEnv(SONARQUBE_SERVER) {
+//                          bat "${scannerHome}\\bin\\sonar-scanner -Dsonar.projectKey=devops-demo -Dsonar.sources=src -Dsonar.projectName=TripCostCalculator -Dsonar.host.url=http://localhost:9000 -Dsonar.token=${SONAR_TOKEN} -Dsonar.java.binaries=target/classes"
+//                      }
+//                  }
+                withSonarQubeEnv(SONARQUBE_SERVER) {
+                 bat """
+                 sonar-scanner ^
+                 -Dsonar.projectKey=devops-demo ^
+                 -Dsonar.sources=src ^
+                 -Dsonar.projectName=TripCostCalculator ^
+                 -Dsonar.host.url=http://localhost:9000 ^
+                 -Dsonar.login=${env.SONAR_TOKEN} ^
+                 -Dsonar.java.binaries=target/classes
+                 """
                  }
              }
          }
