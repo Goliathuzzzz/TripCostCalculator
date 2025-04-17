@@ -7,6 +7,11 @@ pipeline {
             DOCKERHUB_REPO = 'mikaklaa/test_repo'
             // Define Docker image tag
             DOCKER_IMAGE_TAG = 'latest_v1'
+
+            SONARQUBE_SERVER = 'SonarQubeServer' // The name of the SonarQube server configured in Jenkins
+
+            SONAR_TOKEN = 'squ_1fda77ada553ff5feda58708b9dac8dda4b5fba9'
+
         }
     tools {
         maven 'maven_3.9.9'
@@ -22,21 +27,21 @@ pipeline {
                 bat 'mvn clean install'
             }
         }
-        stage('Code Coverage') {
-            steps {
-                bat 'mvn jacoco:report'
-            }
-        }
-        stage('Publish Test Results') {
-            steps {
-                junit '**/target/surefire-reports/*.xml'
-            }
-        }
-        stage('Publish Coverage Report') {
-            steps {
-                jacoco()
-            }
-        }
+        stage('SonarQube Analysis') {
+             steps {
+             withSonarQubeEnv('SonarQubeServer') {
+                 bat """
+                     sonar-scanner ^
+                     -Dsonar.projectKey=devops-demo ^
+                     -Dsonar.sources=src ^
+                     -Dsonar.projectName=TripCostCalculator ^
+                     -Dsonar.host.url=http://localhost:9000 ^
+                     -Dsonar.token=${env.SONAR_TOKEN} ^
+                     -Dsonar.java.binaries=target/classes
+                     """
+                 }
+             }
+         }
         stage('Build Docker Image') {
             steps {
                 // Build Docker image
