@@ -8,7 +8,7 @@ pipeline {
             // Define Docker image tag
             DOCKER_IMAGE_TAG = 'latest_v1'
 
-            SONARQUBE_SERVER = 'SonarQubeServer' // The name of the SonarQube server configured in Jenkins
+            SONARQUBE_SERVER = 'SonarQube Server' // The name of the SonarQube server configured in Jenkins
 
             SONAR_TOKEN = 'squ_1fda77ada553ff5feda58708b9dac8dda4b5fba9'
 
@@ -29,7 +29,7 @@ pipeline {
         }
         stage('SonarQube Analysis') {
              steps {
-             withSonarQubeEnv('SonarQubeServer') {
+             withSonarQubeEnv(SONARQUBE_SERVER) {
                  bat """
                      sonar-scanner ^
                      -Dsonar.projectKey=devops-demo ^
